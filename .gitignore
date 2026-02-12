@@ -1,0 +1,50 @@
+# Common Lisp FASL files (compiled)
+*.fasl
+*.fas
+*.fsl
+*.lx64fsl
+*.lx32fsl
+*.dx64fsl
+*.dx32fsl
+*.x86f
+*.sparcf
+*.sparc64f
+*.hpf
+*.hp64f
+*.err
+*.lib
+*.o
+*.sse2f
+*.dfsl
+*.pfsl
+*.d64fsl
+*.p64fsl
+*.abcl
+
+# ASDF cache
+.cache/
+~/.cache/common-lisp/
+
+# SBCL specific
+*.core
+
+# Quicklisp
+quicklisp/
+quicklisp.lisp
+
+# Editor files
+*~
+\#*\#
+.\#*
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build outputs
+build/
+dist/
