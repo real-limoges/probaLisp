@@ -4,33 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-probaLisp is a probabilistic programming library for Common Lisp built on Church encoding and monadic composition. The core design uses distributions as first-class functions that thread random state explicitly for purity and reproducibility.
+probalisp is a probabilistic programming library for Common Lisp built on Church encoding and monadic composition. The core design uses distributions as first-class functions that thread random state explicitly for purity and reproducibility.
 
 ## Development Commands
 
 ### Loading the System
 ```lisp
 ;; Load with Quicklisp (preferred)
-(ql:quickload :probaLisp)
+(ql:quickload :probalisp)
 
 ;; Or with ASDF
-(asdf:load-system :probaLisp)
+(asdf:load-system :probalisp)
 
 ;; Force reload after changes
-(asdf:load-system :probaLisp :force t)
+(asdf:load-system :probalisp :force t)
 
 ;; Switch to package
-(in-package :probaLisp)
+(in-package :probalisp)
 ```
 
 ### Running Tests
 ```lisp
 ;; Run all tests
-(asdf:test-system :probaLisp)
+(asdf:test-system :probalisp)
 
 ;; Or manually
-(ql:quickload :probaLisp/tests)
-(fiveam:run! :probaLisp)
+(ql:quickload :probalisp/tests)
+(fiveam:run! :probalisp)
 
 ;; Run specific test
 (fiveam:run! 'test-name)
@@ -108,7 +108,7 @@ Follow this checklist:
    - Docstrings with parameter descriptions
    - Parameter validation with `assert`
 
-2. Update `probaLisp.asd`:
+2. Update `probalisp.asd`:
    ```lisp
    (:module "distributions"
     :components ((:file "binomial")
@@ -139,7 +139,7 @@ Tests verify:
 - **Reproducibility**: Same seed produces same results
 - **Validation**: Invalid parameters raise errors
 
-Use FiveAM framework. All tests live in `tests/main.lisp` under the `:probaLisp` suite.
+Use FiveAM framework. All tests live in `tests/main.lisp` under the `:probalisp` suite.
 
 ## Code Style
 
@@ -165,7 +165,7 @@ Use FiveAM framework. All tests live in `tests/main.lisp` under the `:probaLisp`
 ```
 src/
 ├── package.lisp          # Package definition & exports
-├── probaLisp.lisp        # Main entry (currently empty)
+├── probalisp.lisp        # Main entry (currently empty)
 ├── monad.lisp            # Monadic combinators
 └── distributions/        # One file per distribution
     └── binomial.lisp

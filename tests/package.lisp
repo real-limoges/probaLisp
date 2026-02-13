@@ -1,4 +1,4 @@
 ;;;; tests/package.lisp
 
-(defpackage #:probaLisp/tests
-  (:use #:cl #:fiveam #:probaLisp))
+(defpackage #:probalisp/tests
+  (:use #:cl #:fiveam #:probalisp))

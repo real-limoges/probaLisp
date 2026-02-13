@@ -1,10 +1,10 @@
-# probaLisp
+# probalisp
 
 **A probabilistic programming language in Common Lisp**
 
 ### _Real <b.real.limoges@gmail.com>_
 
-probaLisp is a probabilistic programming library that combines functional purity with elegant DSL design. Built on Church encoding and monadic composition, it provides a clean foundation for building and reasoning about probabilistic models.
+probalisp is a probabilistic programming library that combines functional purity with elegant DSL design. Built on Church encoding and monadic composition, it provides a clean foundation for building and reasoning about probabilistic models.
 
 ## Features
 
@@ -17,7 +17,7 @@ probaLisp is a probabilistic programming library that combines functional purity
 ## Quick Example
 
 ```lisp
-(use-package :probaLisp)
+(use-package :probalisp)
 
 ;; Simple sampling
 (run-prob (binomial 10 0.5))
@@ -36,14 +36,14 @@ probaLisp is a probabilistic programming library that combines functional purity
 See [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) for detailed documentation and examples.
 
 ```lisp
-(ql:quickload :probaLisp)
-(in-package :probaLisp)
+(ql:quickload :probalisp)
+(in-package :probalisp)
 (load "examples/examples.lisp")
 ```
 
 ## Architecture
 
-probaLisp uses a **hybrid approach**:
+probalisp uses a **hybrid approach**:
 1. **Foundation**: Church encoding (distributions as functions) + probability monad
 2. **User interface** (future): Clean DSL with `~` sampling syntax
 3. **Benefits**: First-class distributions + readable code

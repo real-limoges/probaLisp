@@ -1,7 +1,7 @@
 ;;;; examples.lisp
-;;;; Usage examples for probaLisp
+;;;; Usage examples for probalisp
 
-(in-package #:probaLisp)
+(in-package #:probalisp)
 
 ;;; Example 1: Simple sampling
 ;;; Sample from Binomial(10, 0.5)
@@ -68,8 +68,8 @@
           (list sample1 sample2 sample3))))))
 
 ;;; To try these examples:
-;;; (ql:quickload :probaLisp)
-;;; (in-package :probaLisp)
+;;; (ql:quickload :probalisp)
+;;; (in-package :probalisp)
 ;;; (example-1)
 ;;; (example-2)
 ;;; etc.

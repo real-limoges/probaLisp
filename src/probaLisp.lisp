@@ -1,3 +1,3 @@
-;;;; probaLisp.lisp
+;;;; probalisp.lisp
 
-(in-package #:probaLisp)
+(in-package #:probalisp)

@@ -1,7 +1,7 @@
 ;;;; monad.lisp
 ;;;; Probability monad - monadic combinators for composing distributions
 
-(in-package #:probaLisp)
+(in-package #:probalisp)
 
 ;;; The probability monad
 ;;; A probabilistic computation is a function: RandomState -> (values Result RandomState)
@@ -52,8 +52,11 @@
   "Map a pure function over a distribution (functor operation)"
   (>>= dist (lambda (x) (return-prob (funcall fn x)))))
 
-(defun run-prob (dist &optional (rng-state *random-state*))
-  "Run a probabilistic computation and return just the value."
+(defun run-prob (dist &optional (rng-state (make-random-state t)))
+  "Run a probabilistic computation and return just the value.
+
+   By default, creates a fresh random state seeded from the current time,
+   so each call produces different results. Pass an explicit state for reproducibility."
   (nth-value 0 (funcall dist rng-state)))
 
 (defun run-prob-with-state (dist &optional (rng-state *random-state*))

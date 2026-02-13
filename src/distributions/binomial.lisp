@@ -1,7 +1,7 @@
 ;;;; binomial.lisp
 ;;;; Binomial distribution implementation
 
-(in-package #:probaLisp)
+(in-package #:probalisp)
 
 ;;; Pure sampling function
 (defun binomial-sample (n p &optional (rng-state *random-state*))

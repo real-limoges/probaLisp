@@ -1,6 +1,6 @@
 ;;;; package.lisp
 
-(defpackage #:probaLisp
+(defpackage #:probalisp
   (:use #:cl)
   (:export
    ;; Distributions

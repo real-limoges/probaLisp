@@ -1,11 +1,11 @@
 ;;;; tests/main.lisp
 
-(in-package #:probaLisp/tests)
+(in-package #:probalisp/tests)
 
-(def-suite :probaLisp
-  :description "Test suite for probaLisp")
+(def-suite :probalisp
+  :description "Test suite for probalisp")
 
-(in-suite :probaLisp)
+(in-suite :probalisp)
 
 ;;; Tests for binomial-sample
 (test binomial-sample-basic
