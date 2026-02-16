@@ -24,8 +24,6 @@
        2. Passes the sample to fn to get a new distribution
        3. Runs that distribution with the new state
 
-   This is the key combinator for sequencing probabilistic computations.
-
    Example:
      ;; Sample from binomial, then use result as parameter to another binomial
      (>>= (binomial 10 0.5)

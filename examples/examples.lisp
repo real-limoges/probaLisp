@@ -67,6 +67,107 @@
           (declare (ignore state3))
           (list sample1 sample2 sample3))))))
 
+;;; Example 7: Simple exponential sampling
+;;; Sample from Exp(1.5) - mean waiting time = 1/1.5 ≈ 0.67
+(defun example-7 ()
+  "Simple exponential sampling"
+  (run-prob (exponential 1.5)))
+
+;;; Example 8: Composing exponential with binomial
+;;; Model: wait for an exponential time, then flip coins based on that
+(defun example-8 ()
+  "Use exponential result to parameterize a binomial"
+  (run-prob
+   (>>= (exponential 2.0)
+        (lambda (wait-time)
+          (>>= (binomial 10 0.5)
+               (lambda (flips)
+                 (return-prob
+                  (list :wait-time wait-time
+                        :flips flips))))))))
+
+;;; Example 9: Modeling time between events
+;;; Simulate arrival times for a Poisson process (rate = 3 events/unit time)
+(defun arrival-times-model (n-events rate)
+  "Generate n arrival times for events with exponential inter-arrival times"
+  (labels ((generate-arrivals (remaining current-time acc)
+             (if (<= remaining 0)
+                 (return-prob (reverse acc))
+                 (>>= (exponential rate)
+                      (lambda (inter-arrival)
+                        (let ((arrival-time (+ current-time inter-arrival)))
+                          (generate-arrivals (1- remaining)
+                                           arrival-time
+                                           (cons arrival-time acc))))))))
+    (generate-arrivals n-events 0.0 nil)))
+
+(defun example-9 ()
+  "Generate 5 arrival times with rate 3.0"
+  (run-prob (arrival-times-model 5 3.0)))
+
+;;; Example 10: Transform exponential samples
+;;; Sample waiting time and convert to integer seconds
+(defun example-10 ()
+  "Transform exponential result using fmap"
+  (run-prob
+   (fmap (lambda (time) (ceiling time))
+         (exponential 0.5))))
+
+;;; Example 11: Simple uniform sampling
+;;; Sample from Uniform(0, 10)
+(defun example-11 ()
+  "Simple uniform sampling"
+  (run-prob (uniform 0.0 10.0)))
+
+;;; Example 12: Composing uniform with binomial
+;;; Sample a probability from Uniform(0,1), then use it for a binomial
+(defun example-12 ()
+  "Use a uniform sample as a binomial probability"
+  (run-prob
+   (>>= (uniform 0.0 1.0)
+        (lambda (p)
+          (>>= (binomial 20 p)
+               (lambda (successes)
+                 (return-prob
+                  (list :prob p :successes successes))))))))
+
+;;; Example 13: Simple geometric sampling
+;;; Sample from Geometric(0.3) - expected number of failures before first success
+(defun example-13 ()
+  "Simple geometric sampling"
+  (run-prob (geometric 0.3)))
+
+;;; Example 14: Composing geometric with uniform
+;;; Model: sample a success probability, then count failures until first success
+(defun example-14 ()
+  "Use a uniform sample as geometric probability"
+  (run-prob
+   (>>= (uniform 0.1 0.9)
+        (lambda (p)
+          (>>= (geometric p)
+               (lambda (failures)
+                 (return-prob
+                  (list :prob p :failures-before-success failures))))))))
+
+;;; Example 15: Combining all distributions
+;;; A model that uses binomial, exponential, uniform, and geometric together
+(defun example-15 ()
+  "Combine all four distributions in a single model"
+  (run-prob
+   (>>= (uniform 0.2 0.8)
+        (lambda (p)
+          (>>= (binomial 10 p)
+               (lambda (successes)
+                 (>>= (geometric p)
+                      (lambda (wait)
+                        (>>= (exponential 1.0)
+                             (lambda (time)
+                               (return-prob
+                                (list :p p
+                                      :successes successes
+                                      :wait-until-success wait
+                                      :time time))))))))))))
+
 ;;; To try these examples:
 ;;; (ql:quickload :probalisp)
 ;;; (in-package :probalisp)
