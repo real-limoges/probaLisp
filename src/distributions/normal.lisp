@@ -7,7 +7,9 @@
   "Sample two independent standard normal variables using Box-Muller transform.
    Returns: Multiple values: (z1 z2 new-state)"
   (let ((state (make-random-state rng-state)))
-    (let* ((u1 (random 1.0 state))
+    (let* ((u1 (loop for rand = (random 1.0 state)
+                     unless (zerop rand)
+                     return rand))
            (u2 (random 1.0 state))
            (r (sqrt (* -2.0 (log u1))))
            (theta (* 2.0 3.141592653589793d0 u2)))

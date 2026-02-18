@@ -12,9 +12,11 @@
                 :pathname "src/distributions"
                 :serial t
                 :components ((:file "binomial")
+                             (:file "bernoulli")
                              (:file "exponential")
                              (:file "geometric")
                              (:file "normal")
+                             (:file "poisson")
                              (:file "uniform"))))
   :in-order-to ((test-op (test-op "probalisp/tests"))))
 

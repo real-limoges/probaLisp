@@ -12,9 +12,10 @@
       "lambda must be in (0, inf), got ~A" lam)
 
   (let ((state (make-random-state rng-state)))
-    (values
-      (/ (- (log (random 1.0 state))) lam)
-      state)))
+    (let ((u (loop for rand = (random 1.0 state)
+                   unless (zerop rand)
+                   return rand)))
+      (values (/ (- (log u)) lam) state))))
 
 
 ;; Church encoding: distribution as a function

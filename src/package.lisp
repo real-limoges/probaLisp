@@ -14,6 +14,10 @@
    #:geometric-sample
    #:normal
    #:normal-sample
+   #:bernoulli
+   #:bernoulli-sample
+   #:poisson
+   #:poisson-sample
 
    ;; Probability monad
    #:return-prob

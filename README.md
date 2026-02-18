@@ -12,6 +12,7 @@ probalisp is a probabilistic programming library that combines functional purity
 - 🔗 **Monadic composition** - Chain distributions with `>>=`
 - 🎯 **Church encoding** - Distributions as first-class functions
 - 📦 **Extensible** - Easy to add new distributions
+- 🛡️ **Numerically safe** - Guards against `log(0)` in all inverse-transform samplers
 - 🚀 **Future DSL syntax** - Clean macro sugar coming soon
 
 ## Quick Example
@@ -53,11 +54,14 @@ See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for detailed project 
 ## Current Distributions
 
 - [x] Binomial
+- [x] Normal/Gaussian
+- [x] Uniform
+- [x] Geometric
+- [x] Exponential
+- [x] Poisson
+- [x] Bernoulli
 
 Coming soon:
-- [ ] Normal/Gaussian
-- [ ] Poisson
-- [ ] Bernoulli
 - [ ] Beta
 - [ ] Gamma
 
