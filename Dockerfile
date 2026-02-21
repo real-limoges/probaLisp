@@ -11,8 +11,12 @@ COPY quicklisp.lisp /tmp/quicklisp.lisp
 RUN sbcl --non-interactive \
          --load /tmp/quicklisp.lisp \
          --eval '(quicklisp-quickstart:install :path "/root/quicklisp/")' \
-         --eval '(ql:add-to-init-file)' \
-  && rm /tmp/quicklisp.lisp
+  && rm /tmp/quicklisp.lisp \
+  && printf '%s\n' \
+       '#-quicklisp' \
+       '(let ((ql-init (merge-pathnames "quicklisp/setup.lisp" (user-homedir-pathname))))' \
+       '  (when (probe-file ql-init) (load ql-init)))' \
+       >> /root/.sbclrc
 
 # Pre-install dependencies (cached layer - before COPY so it survives code changes)
 RUN sbcl --non-interactive \
