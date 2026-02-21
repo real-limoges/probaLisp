@@ -4,7 +4,47 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-probalisp is a probabilistic programming library for Common Lisp built on Church encoding and monadic composition. The core design uses distributions as first-class functions that thread random state explicitly for purity and reproducibility.
+probalisp is a Common Lisp probabilistic programming library deployed as a microservice for **Fugue** — an interactive data science showcase. **Tagline**: "probability is intuitive and fun — let's prove it."
+
+**Audience**: Curious non-technical people and technical people without a probability background.
+
+**Role in Fugue**: One self-contained page alongside a Rust/WASM Wikipedia explorer, Julia/WASM birdsong dialect analyzer, and Haskell jazz generator. probalisp handles the Bayesian intuition piece.
+
+The core design uses distributions as first-class functions (Church encoding) that thread random state explicitly for purity and reproducibility, composed via a probability monad.
+
+## Showcase Vision
+
+The page demonstrates Bayesian updating interactively — **prior → likelihood → posterior** — with live histogram updates driven by sliders.
+
+### Conjugate Pair Showcases
+
+| Pair | What it shows | Status |
+|---|---|---|
+| Beta-Binomial | Proportions — belief about a rate in [0,1] | needs `beta` |
+| Gamma-Poisson | Rates — how often does something happen? | needs `gamma` |
+| Normal-Normal | Signal in noisy measurements | stretch; `normal` done |
+
+Concrete stories for each pair are TBD and may tie into other Fugue projects.
+
+**Why these pairs**: Beta-Binomial and Gamma-Poisson are chosen because they show fundamentally different kinds of uncertainty (proportions vs. rates). Normal-Normal shows uncertainty narrowing, which is visually distinct from the other two.
+
+### UI Roadmap
+
+- **MVP**: Sliders only. Parameters control prior/likelihood; posterior updates live.
+- **Future**: Block-based composition UI below the fold, with read-only generated code display.
+
+### Architecture
+
+```
+Phoenix LiveView (Elixir) <--HTTP JSON--> probalisp microservice (CL)
+Sliders → params → CL computes posterior samples → LiveView renders histogram
+```
+
+### Distribution Status
+
+- **Done**: `binomial`, `normal`, `uniform`, `geometric`
+- **Needed for showcase**: `beta`, `gamma`
+- **Conjugate update logic** (posterior computation) is a separate layer on top of the distributions
 
 ## Development Commands
 
@@ -167,6 +207,7 @@ src/
 ├── package.lisp          # Package definition & exports
 ├── probalisp.lisp        # Main entry (currently empty)
 ├── monad.lisp            # Monadic combinators
+├── server.lisp           # HTTP microservice for LiveView integration
 └── distributions/        # One file per distribution
     └── binomial.lisp
 

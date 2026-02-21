@@ -14,16 +14,24 @@ RUN sbcl --non-interactive \
          --eval '(ql:add-to-init-file)' \
   && rm /tmp/quicklisp.lisp
 
-# Pre-install test dependency
+# Pre-install dependencies (cached layer - before COPY so it survives code changes)
 RUN sbcl --non-interactive \
-         --eval '(ql:quickload :fiveam)'
+         --eval '(ql:quickload :fiveam)' \
+         --eval '(ql:quickload :cl-json)' \
+         --eval '(ql:quickload :usocket)'
 
 WORKDIR /root/quicklisp/local-projects/probalisp
 
 COPY . .
 
-# Load system to verify it compiles
-RUN sbcl --non-interactive \
-         --eval '(ql:quickload :probalisp)'
+# Build a self-contained executable with the system pre-loaded.
+# save-lisp-and-die embeds the full compiled image so startup is fast (~100ms).
+RUN mkdir -p /app && \
+    sbcl --non-interactive \
+         --eval '(ql:quickload :probalisp)' \
+         --eval '(sb-ext:save-lisp-and-die "/app/probalisp-server" :executable t :toplevel (function probalisp:start-server))'
 
-CMD ["sbcl", "--eval", "(ql:quickload :probalisp)", "--eval", "(in-package :probalisp)"]
+ENV PROBALISP_PORT=4001
+EXPOSE 4001
+
+CMD ["/app/probalisp-server"]

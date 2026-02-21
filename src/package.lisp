@@ -25,4 +25,7 @@
    #:>>
    #:fmap
    #:run-prob
-   #:run-prob-with-state))
+   #:run-prob-with-state
+
+   ;; Server
+   #:start-server))

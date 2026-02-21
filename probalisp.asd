@@ -3,7 +3,7 @@
   :version "0.1.0"
   :author "Your Name"
   :license "MIT"
-  :depends-on ()
+  :depends-on (:cl-json :usocket)
   :serial t
   :components ((:file "src/package")
                (:file "src/probalisp")
@@ -17,7 +17,8 @@
                              (:file "geometric")
                              (:file "normal")
                              (:file "poisson")
-                             (:file "uniform"))))
+                             (:file "uniform")))
+               (:file "src/server"))
   :in-order-to ((test-op (test-op "probalisp/tests"))))
 
 (defsystem "probalisp/tests"

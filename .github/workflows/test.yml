@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SBCL
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends sbcl curl
+
+      - name: Install Quicklisp
+        run: |
+          curl -sO https://beta.quicklisp.org/quicklisp.lisp
+          sbcl --non-interactive \
+               --load quicklisp.lisp \
+               --eval '(quicklisp-quickstart:install)' \
+               --eval '(ql:add-to-init-file)'
+
+      - name: Install dependencies
+        run: |
+          sbcl --non-interactive \
+               --eval '(ql:quickload :fiveam)' \
+               --eval '(ql:quickload :cl-json)' \
+               --eval '(ql:quickload :usocket)'
+
+      - name: Link project into Quicklisp local-projects
+        run: ln -s "$GITHUB_WORKSPACE" ~/quicklisp/local-projects/probalisp
+
+      - name: Run tests
+        run: |
+          sbcl --non-interactive \
+               --eval '(ql:quickload :probalisp/tests)' \
+               --eval '(unless (fiveam:run! :probalisp) (sb-ext:exit :code 1))'
